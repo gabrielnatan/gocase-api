@@ -1,14 +1,18 @@
 import { beforeAll, describe, expect, it } from 'vitest'
-import { User, UserProps } from '../user.entity.js'
-import { v4 as uuid} from 'uuid'
+import {  User, UserProps } from '../user.entity.js'
+import { Uuid } from '../../../../@sahred/domain/value-object/uuid/uuid.entity.js'
 describe('[User entity]', () => {
     let mockUser:UserProps
 
     beforeAll(()=>{
+        const uuid = new Uuid()
         mockUser = {
-            id: uuid(),
+            id: uuid,
             first_name: 'John',
             last_name: 'Doe',
+            email: 'john_doe@email.com',
+            password: '123456',
+            role: 'admin'
         }
     })
     it("should create a User",()=>{
@@ -19,6 +23,8 @@ describe('[User entity]', () => {
         expect(user.id).toBe(mockUser.id)
         expect(user.first_name).toBe(mockUser.first_name)
         expect(user.last_name).toBe(mockUser.last_name)
+        expect(user.email).toBe(mockUser.email)
+        expect(user.password).toBe(mockUser.password)
     })
 
     it("should create a User with the static create method",()=>{
@@ -28,7 +34,9 @@ describe('[User entity]', () => {
         expect(user.id).toBe(mockUser.id)
         expect(user.first_name).toBe(mockUser.first_name)
         expect(user.last_name).toBe(mockUser.last_name)
-        expect(typeof user.id).toBe("string");
+        expect(user.email).toBe(mockUser.email)
+        expect(user.password).toBe(mockUser.password)
+        expect(user.id).instanceOf(Uuid);
     })
 
     it("should return a JSON representation of the User",()=>{
@@ -42,7 +50,7 @@ describe('[User entity]', () => {
     
         expect(user).toBeInstanceOf(User);
         expect(user.id).toBeDefined(); 
-        expect(typeof user.id).toBe("string");
+        expect(user.id).instanceOf(Uuid);
     });
 
     it("should update the first name of the User", () => {
