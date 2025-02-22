@@ -1,19 +1,31 @@
-import { v4 as uuid } from "uuid"
+import { Uuid } from "../../../@sahred/domain/value-object/uuid/uuid.entity.js";
+
+type Role = 'admin' | 'user';
+
 export type UserProps = {
-    id?:string;
+    id?:Uuid;
     first_name: string;
     last_name: string;
+    email: string;
+    password: string;
+    role: Role;
 }
 
 export class User {
-    id?:string;
+    id?:Uuid;
     first_name: string;
     last_name: string;
+    email: string;
+    password: string;
+    role: Role;
     
-    constructor({ id = uuid(), first_name, last_name}:UserProps){
-        this.id = id;
+    constructor({ id, first_name, last_name, email, password, role}:UserProps){
+        this.id = id ?? new Uuid();
         this.first_name = first_name;
         this.last_name = last_name 
+        this.email = email;
+        this.password = password 
+        this.role = role 
     }
 
     changeFirstName(first_name:string){
@@ -24,6 +36,7 @@ export class User {
         this.last_name = last_name
     }
 
+
     static create(user: UserProps){
         return new User(user)
     }
@@ -32,7 +45,10 @@ export class User {
         return{
             id: this.id,
             first_name: this.first_name,
-            last_name: this.last_name
+            last_name: this.last_name,
+            email: this.email,
+            password: this.password,
+            role: this.role,
         }
     }
 }
