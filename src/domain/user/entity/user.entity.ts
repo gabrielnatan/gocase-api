@@ -1,4 +1,6 @@
+import { Entity } from "../../../@sahred/domain/entity/entity.js";
 import { Uuid } from "../../../@sahred/domain/value-object/uuid/uuid.entity.js";
+import { ValueObject } from "../../../@sahred/domain/value-object/value-object.js";
 
 type Role = 'admin' | 'user';
 
@@ -11,8 +13,8 @@ export type UserProps = {
     role: Role;
 }
 
-export class User {
-    id?:Uuid;
+export class User extends Entity{
+    id:Uuid;
     first_name: string;
     last_name: string;
     email: string;
@@ -20,6 +22,7 @@ export class User {
     role: Role;
     
     constructor({ id, first_name, last_name, email, password, role}:UserProps){
+        super()
         this.id = id ?? new Uuid();
         this.first_name = first_name;
         this.last_name = last_name 
@@ -39,6 +42,10 @@ export class User {
 
     static create(user: UserProps){
         return new User(user)
+    }
+
+    get entity_id(): ValueObject {
+        return this.id
     }
 
     toJSON(){
