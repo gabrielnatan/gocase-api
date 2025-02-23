@@ -12,7 +12,10 @@ describe('[User entity]', () => {
             last_name: 'Doe',
             email: 'john_doe@email.com',
             password: '123456',
-            role: 'admin'
+            role: 'admin',
+            created_at: new Date(),
+            updated_at: undefined,
+            deleted_at: undefined
         }
     })
     it("should create a User",()=>{
