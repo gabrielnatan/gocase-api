@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 import { userRouter } from './routes/user/user.routes.js';
 import mongoose from "mongoose";
 import cors from "cors"
+import { authenticationRouter } from './routes/authentication/authentication.routes.js';
+import { authenticateToken } from '../../@sahred/infrastructure/middleware/verify-token.middleware.js';
 
 dotenv.config();
 
@@ -17,6 +19,11 @@ const app = express()
 app.use(express.json());
 app.use(cors({ origin: "*" }));
 
-app.use('/api/user', userRouter);
+
+
+
+app.use('/api', authenticationRouter);
+app.use('/api/auth/', authenticateToken);
+app.use('/api/auth/user', userRouter);
 
 export { app };
