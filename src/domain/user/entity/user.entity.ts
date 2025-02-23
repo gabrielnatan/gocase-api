@@ -11,6 +11,9 @@ export type UserProps = {
     email: string;
     password: string;
     role: Role;
+    created_at?: Date;
+    updated_at?: Date;
+    deleted_at?: Date;
 }
 
 export class User extends Entity{
@@ -20,8 +23,11 @@ export class User extends Entity{
     email: string;
     password: string;
     role: Role;
+    created_at: Date;
+    updated_at?: Date;
+    deleted_at?: Date;
     
-    constructor({ id, first_name, last_name, email, password, role}:UserProps){
+    constructor({ id, first_name, last_name, email, password, role,created_at, deleted_at, updated_at}:UserProps){
         super()
         this.id = id ?? new Uuid();
         this.first_name = first_name;
@@ -29,6 +35,9 @@ export class User extends Entity{
         this.email = email;
         this.password = password 
         this.role = role 
+        this.created_at = created_at ?? new Date(); 
+        this.updated_at = updated_at;
+        this.deleted_at = deleted_at;
     }
 
     changeFirstName(first_name:string){
@@ -56,6 +65,9 @@ export class User extends Entity{
             email: this.email,
             password: this.password,
             role: this.role,
+            created_at: this.created_at, 
+            updated_at: this.updated_at,
+            deleted_at: this.deleted_at
         }
     }
 }
