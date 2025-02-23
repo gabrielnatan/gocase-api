@@ -8,19 +8,21 @@ import { authenticateToken } from '../../@sahred/infrastructure/middleware/verif
 
 dotenv.config();
 
+const app = express();
+app.use(express.json());
+
+app.use(cors({
+    origin: "http://localhost:3002", 
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true 
+}));
+
 await mongoose.connect('mongodb://root:example@localhost:27017/', {
     pass: process.env.MONGO_PASSWORD,
     user: process.env.MONGO_USER,
     dbName: process.env.MONGO_DATABASE
 });
-  
-const app = express()
-
-app.use(express.json());
-app.use(cors({ origin: "*" }));
-
-
-
 
 app.use('/api', authenticationRouter);
 app.use('/api/auth/', authenticateToken);
