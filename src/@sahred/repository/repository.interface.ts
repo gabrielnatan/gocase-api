@@ -7,5 +7,5 @@ export interface IRepository<E extends Entity, EntityId extends ValueObject>{
     delete(entityId:EntityId):Promise<void>
     
     findById(entityId:EntityId):Promise<E | null>
-    findAll():Promise<E[] | null>
+    findAll(user_id:EntityId):Promise<E[] | null>
 }

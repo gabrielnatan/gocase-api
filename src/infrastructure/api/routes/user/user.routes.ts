@@ -26,7 +26,7 @@ const handleError = (res: Response, error: unknown) => {
 
 userRouter.get('/', async (req: Request, res: Response) => {
     try {
-        const users = await listUserUseCase.execute({});
+        const users = await listUserUseCase.execute({user_id: req.user.id as string});
         res.json({ message: users });
     } catch (error) {
         handleError(res, error);

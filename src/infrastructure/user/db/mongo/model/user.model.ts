@@ -1,5 +1,6 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
+import { Uuid } from '../../../../../@sahred/domain/value-object/uuid/uuid.entity.js';
 
 type Role = 'admin' | 'user';
 
@@ -20,7 +21,7 @@ const UserSchema: Schema = new Schema<IUser>({
     type: String, 
     required: true, 
     unique: true,
-    default: uuidv4,  // Gera automaticamente um UUID
+    default: new Uuid().id,
     validate: {
       validator: function(v: string) {
         return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(v);

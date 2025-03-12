@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/infrastructure/api/server.ts",
+    "dev:server": "tsx watch src/server.ts",
     "start": "node dist/server.js",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "build":"npx tsc"
   },
   "keywords": [],
   "author": "",

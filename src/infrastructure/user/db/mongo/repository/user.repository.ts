@@ -1,6 +1,6 @@
 import { Uuid } from "../../../../../@sahred/domain/value-object/uuid/uuid.entity.js";
 import { IRepository } from "../../../../../@sahred/repository/repository.interface.js";
-import { IUserRepository } from "../../../../../domain/user/entity/repository/user.repository.interface.js";
+import { IUserRepository } from "../../../../../domain/user/repository/user.repository.interface.js";
 import { User } from "../../../../../domain/user/entity/user.entity.js";
 import { UserModelMapper } from "../mapper/user-model.mapper.js";
 import { UserModel, IUser } from "../model/user.model.js";

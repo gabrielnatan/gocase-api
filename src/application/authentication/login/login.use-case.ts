@@ -1,7 +1,7 @@
 import { IUseCase } from "../../../@sahred/application/use-case.interface.js";
 import { IAuthenticationCache } from "../../../@sahred/domain/cache/authentication/authentication.entity.js";
 import { SessionToken } from "../../../@sahred/domain/token/entity/session-token.entity.js";
-import { IUserRepository } from "../../../domain/user/entity/repository/user.repository.interface.js";
+import { IUserRepository } from "../../../domain/user/repository/user.repository.interface.js";
 
 export class LoginUseCase implements IUseCase<LoginAuthenticationInput, LoginAuthenticationOutput> {
 
@@ -40,6 +40,7 @@ export class LoginUseCase implements IUseCase<LoginAuthenticationInput, LoginAut
             success: true,
             access_token: accessToken,
             expires_at: expiresAt,
+            user_id: user.id.id
         };
     }
 
@@ -61,4 +62,5 @@ type LoginAuthenticationOutput = {
     success: boolean;
     access_token?: string;
     expires_at?: Date;
+    user_id?: string;
 };

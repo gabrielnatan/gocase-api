@@ -1,6 +1,6 @@
 import { IUseCase } from "../../../@sahred/application/use-case.interface.js";
 import { Uuid } from "../../../@sahred/domain/value-object/uuid/uuid.entity.js";
-import { IUserRepository } from "../../../domain/user/entity/repository/user.repository.interface.js";
+import { IUserRepository } from "../../../domain/user/repository/user.repository.interface.js";
 import { UserOutput, UserOutputMapper, UserRole } from "../common/user-output.js";
 
 export class UpdateUserUseCase implements IUseCase<UpdateUserInput, UpdateUserOutput> {

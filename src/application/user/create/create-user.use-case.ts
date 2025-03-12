@@ -1,5 +1,5 @@
 import { IUseCase } from "../../../@sahred/application/use-case.interface.js";
-import { IUserRepository } from "../../../domain/user/entity/repository/user.repository.interface.js";
+import { IUserRepository } from "../../../domain/user/repository/user.repository.interface.js";
 import { User } from "../../../domain/user/entity/user.entity.js";
 import { UserOutput, UserOutputMapper, UserRole } from "../common/user-output.js";
 

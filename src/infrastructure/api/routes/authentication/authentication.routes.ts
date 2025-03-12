@@ -37,11 +37,12 @@ authenticationRouter.post("/login",async(req:Request, res:Response)=>{
         const token = response.access_token
 
         res.cookie("access_token", token, {
-            sameSite: true,
-            httpOnly: false,
-            secure:false,
-            maxAge: 3600000 
+            sameSite: "none", 
+            httpOnly: false, 
+            secure: true, 
+            maxAge: 3600000
         });
+        
         
         res.json(response)
     } catch (error) {
@@ -70,7 +71,7 @@ authenticationRouter.get("/logout",authenticateToken,async(req:Request, res:Resp
     }
 })
 
-authenticationRouter.post("/create-account",authenticateToken,async(req:Request, res:Response)=>{
+authenticationRouter.post("/create-account",async(req:Request, res:Response)=>{
     const { first_name, last_name, email, password, role, confirm_password } = req.body
     try {
         const userDTO ={

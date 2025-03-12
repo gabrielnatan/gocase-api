@@ -1,6 +1,6 @@
 import { IUseCase } from "../../../@sahred/application/use-case.interface.js";
 import { Uuid } from "../../../@sahred/domain/value-object/uuid/uuid.entity.js";
-import { IUserRepository } from "../../../domain/user/entity/repository/user.repository.interface.js";
+import { IUserRepository } from "../../../domain/user/repository/user.repository.interface.js";
 
 export class DeleteUserUseCase implements IUseCase<DeleteUserInput,DeleteUserOutput>{
     constructor(private readonly userRepo:IUserRepository){}
