@@ -31,7 +31,7 @@ export class CreateCampaignUseCase implements IUseCase<CreateCampaignUseCaseInpu
 interface CreateCampaignUseCaseInput {
     name: string;
     goal: string;
-    products: string;
+    products: string[];
     content_type: string;
     hashtags: string[];
     influencers: string[];

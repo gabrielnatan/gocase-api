@@ -49,7 +49,7 @@ export interface UpdateCampaignInput {
     id: string;
     name?: string;
     goal?: string;
-    products?: string;
+    products?: string[];
     content_type?: string;
     hashtags?: string[];
     influencers?: string[];

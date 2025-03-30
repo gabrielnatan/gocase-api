@@ -4,6 +4,7 @@ import { ICampaign, CampaignModel } from "../model/campaign.model.js";
 
 export class CampaignModelMapper {
     static toModel(entity: Campaign): ICampaign {
+        
         return new CampaignModel({
             id: entity.id.id, 
             name: entity.name,

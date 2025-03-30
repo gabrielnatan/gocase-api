@@ -7,7 +7,7 @@ export interface MessageProps{
     chat_id: string;
     sender: "user" | "assistant";
     content: string;
-    type?: 'message' | 'briefing' | 'upload';
+    type?: 'message' | 'briefing' | 'upload' | 'product' | 'postagem' | 'influencers';
     props?: object;
     created_at?: Date;
     updated_at?: Date;
@@ -19,14 +19,13 @@ export class Message  extends Entity{
     chat_id: string;
     sender: "user" | "assistant";
     content: string;
-    type?: 'message' | 'briefing' | 'upload' = 'message'; 
+    type?: 'message' | 'briefing' | 'upload'| 'product' | 'postagem' | 'influencers' = 'message'; 
     props?: object;
     created_at: Date;
     updated_at?: Date;
     deleted_at?: Date;
 
     constructor({ id, chat_id, sender, content, type, props, created_at, updated_at, deleted_at }: MessageProps) {
-        console.log("upload ",type)
         super()
         this.id = id ?? new Uuid();
         this.chat_id = chat_id;

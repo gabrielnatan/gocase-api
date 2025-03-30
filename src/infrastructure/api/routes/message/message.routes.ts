@@ -13,6 +13,10 @@ import { SendMessageUseCase } from "../../../../application/ai/chatgpt/send-mess
 import { Uuid } from "../../../../@sahred/domain/value-object/uuid/uuid.entity.js";
 import OpenAI from "openai";
 import { UpdateChatUseCase } from "../../../../application/chat/update/update-chat.use-case.js";
+import { FirstMessageUseCase } from "../../../../application/ai/chatgpt/first-message.use-case.js";
+import { createUploadMiddleware } from "../../../../@sahred/infrastructure/middleware/multer.middleware.js";
+import { CreateCampaignUseCase } from "../../../../application/campaign/create/create-campaign.use-case.js";
+import { CampaignRepository } from "../../../campaign/db/mongo/repository/campaign.repository.js";
 
 const messageRouter = express.Router();
 
@@ -31,8 +35,13 @@ const openAi = new OpenAI({
 
 const chatRepository = new ChatRepository();
 const updateChat = new UpdateChatUseCase(chatRepository)
-const chatGPTService = new ChatGPTService(updateChat, openAi, messageRepository);
+
+const campaignRepository =  new CampaignRepository()
+const createCampaignUseCase =  new CreateCampaignUseCase(campaignRepository)
+const chatGPTService = new ChatGPTService(updateChat, openAi, messageRepository,createCampaignUseCase);
+
 const sendMessageUseCase = new SendMessageUseCase(chatGPTService, messageRepository, chatRepository);
+const firstMessageUseCase = new FirstMessageUseCase(chatGPTService, chatRepository);
 
 
 const handleError = (res: Response, error: unknown) => {
@@ -97,17 +106,23 @@ messageRouter.post('/chat', async (req: Request, res: Response) => {
     try {
         const { 
             chat_id,
-            sender,
             content
         } = req.body
 
-        const messageDTO = { 
-            chat_id,
-            sender,
-            content 
-        };
-
         const message = await sendMessageUseCase.execute(new Uuid(chat_id),content as any);
+        res.status(201).json({ message: message });
+    } catch (error) {
+        handleError(res, error);
+    }
+});
+messageRouter.post('/first_message', async (req: Request, res: Response) => {
+    console.log("AQUI QUANTAS VEZES")
+    try {
+        const { 
+            chat_id,
+        } = req.body
+
+        const message = await firstMessageUseCase.execute(new Uuid(chat_id));
         res.status(201).json({ message: message });
     } catch (error) {
         handleError(res, error);
@@ -146,5 +161,22 @@ messageRouter.delete('/:id', async (req: Request, res: Response) => {
         handleError(res, error);
     }
 });
+
+messageRouter.post(
+    "/upload",
+    createUploadMiddleware("recursos", "images", 10), 
+    async (req: Request, res: Response) => {
+      try {
+        const imageUrls = req.body.images; 
+  
+        res.status(201).json({
+          message: "Upload realizado com sucesso",
+          images: imageUrls,
+        });
+      } catch (error) {
+        handleError(res, error);
+      }
+    }
+  );
 
 export { messageRouter };

@@ -15,7 +15,6 @@ export class CreateChatUseCase implements IUseCase<CreateChatUseCaseInput, Creat
             created_at: new Date(),
         })
 
-        console.log("ENTITY ",entity)
         await this.chatRepo.insert(entity);
         return ChatOutputMapper.toOutput(entity)
     }

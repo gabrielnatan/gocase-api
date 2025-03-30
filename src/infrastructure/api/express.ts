@@ -9,21 +9,27 @@ import { chatRouter } from './routes/chat/chat.routes.js';
 import { messageRouter } from './routes/message/message.routes.js';
 import { campaignRouter } from './routes/campaign/campaign.routes.js';
 import { productRouter } from './routes/product/product.routes.js';
+import path from 'path';
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
-console.log('UPDATE 2')
-console.log("process.env.REDIS_URL ",process.env.REDIS_URL)
 app.use(cors({
-    origin: ["http://localhost:3001", "http://127.0.0.1:3001"], 
+    origin: "http://localhost:3001", 
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true 
 }));
 
-await mongoose.connect('mongodb://admin:password@mongo:27017/gocase');
+app.use("/uploads", express.static(path.resolve("src", "upload")));
+
+await mongoose.connect('mongodb://root:example@localhost:27017/', {
+    pass: process.env.MONGO_PASSWORD,
+    user: process.env.MONGO_USER,
+    dbName: process.env.MONGO_DATABASE
+});
+
 
 app.use('/api', authenticationRouter);
 app.use('/api/auth/', authenticateToken);

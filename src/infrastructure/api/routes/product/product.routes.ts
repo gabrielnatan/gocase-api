@@ -6,6 +6,7 @@ import { DeleteProductUseCase } from "../../../../application/product/delete/del
 import { GetProductUseCase } from "../../../../application/product/get/get-product.use-case.js";
 import { ProductRepository } from "../../../product/db/mongo/repository/product.repository.js";
 import { CreateProductUseCase } from "../../../../application/product/create/create-product-.use-case.js";
+import { createUploadMiddleware } from "../../../../@sahred/infrastructure/middleware/multer.middleware.js";
 
 const productRouter = express.Router();
 
@@ -43,7 +44,10 @@ productRouter.get('/:id', async (req: Request, res: Response) => {
     }
 });
 
-productRouter.post('/', async (req: Request, res: Response) => {
+productRouter.post(
+    '/', 
+    createUploadMiddleware("products", "images", 5), 
+    async (req: Request, res: Response) => {
     try {
         const productDTO = {
             ...req.body,

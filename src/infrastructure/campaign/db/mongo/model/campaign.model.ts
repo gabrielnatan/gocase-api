@@ -5,7 +5,7 @@ export interface ICampaign extends Document {
     id: string;
     name: string;
     goal: string;
-    products: string;
+    products: string[];
     content_type: string;
     hashtags: string[];
     influencers: string[];
@@ -35,7 +35,7 @@ const CampaignSchema: Schema = new Schema<ICampaign>({
     },
     name: { type: String, required: true },
     goal: { type: String, required: true },
-    products: { type: String, required: true },
+    products: { type: [String], required: true },
     content_type: { type: String, required: true },
     hashtags: { type: [String], required: true },
     influencers: { type: [String], required: true },

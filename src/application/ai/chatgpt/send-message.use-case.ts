@@ -34,9 +34,6 @@ export class SendMessageUseCase {
         this.chatGPTService.chatInfo({ chat_id:chat_id.id, title:chat.title, messages:newMessages })
         const botResponse = await this.chatGPTService.sendMessage({ role: "user", content: userMessage });
 
-        const botMsg = Message.create({ chat_id: chat_id.id, sender: "assistant", content: botResponse });
-        await this.messageRepository.insert(botMsg);
-
-        return { userMessage: userMsg, botMessage: botMsg };
+        return { userMessage: userMsg, botMessage: botResponse };
     }
 }

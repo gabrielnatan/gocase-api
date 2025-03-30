@@ -11,7 +11,7 @@ describe('[Campaign entity]', () => {
             id: uuid,
             name: "Dominando o Verão com a Gocase",
             goal: "Expandir a marca para surfistas e skatistas",
-            products: "Capinha de Skate (#5870), Capinha de Surf (#7841)",
+            products: ["Capinha de Skate (#5870), Capinha de Surf (#7841)"],
             content_type: "Reels, Stories, Feed Posts",
             hashtags: ["#DominandoOVerão", "#GocaseSurf", "#GocaseSkate"],
             influencers: ["@surfista_pro", "@skater_life", "@beachvibes"],
@@ -107,9 +107,9 @@ describe('[Campaign entity]', () => {
 
     it("should update the campaign products", () => {
         const campaign = new Campaign(mockCampaign);
-        campaign.changeProducts("Novo Produto XYZ");
+        campaign.changeProducts(["Novo Produto XYZ"]);
 
-        expect(campaign.products).toBe("Novo Produto XYZ");
+        expect(campaign.products).toBe(["Novo Produto XYZ"]);
     });
 
     it("should update the campaign content type", () => {

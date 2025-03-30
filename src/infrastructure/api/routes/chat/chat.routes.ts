@@ -6,6 +6,12 @@ import { UpdateChatUseCase } from "../../../../application/chat/update/update-ch
 import { DeleteChatUseCase } from "../../../../application/chat/delete/delete-chat.use-case.js";
 import { GetChatUseCase } from "../../../../application/chat/get/get-user.use-case.js";
 import { ChatRepository } from "../../../chat/db/mongo/repository/message.repository.js";
+import { FirstMessageUseCase } from "../../../../application/ai/chatgpt/first-message.use-case.js";
+import { MessageRepository } from "../../../message/db/mongo/repository/message.repository.js";
+import { MessageModel } from "../../../message/db/mongo/model/message.model.js";
+import { ChatGPTService } from "../../../ai/chatgpt/chatgpt.js";
+import OpenAI from "openai";
+import { Uuid } from "../../../../@sahred/domain/value-object/uuid/uuid.entity.js";
 
 const chatRouter = express.Router();
 
@@ -15,6 +21,16 @@ const listChatUseCase = new ListChatUseCase(chatRepository);
 const createChatUseCase = new CreateChatUseCase(chatRepository);
 const updateChatUseCase = new UpdateChatUseCase(chatRepository);
 const deleteChatUseCase = new DeleteChatUseCase(chatRepository);
+
+const openAi = new OpenAI({
+    apiKey: process.env.API_KEY_CHAT_GPT,
+});
+
+
+const messageRepository = new MessageRepository(MessageModel);
+const updateChat = new UpdateChatUseCase(chatRepository)
+const chatGPTService = new ChatGPTService(updateChat, openAi, messageRepository);
+const firstMessageUseCase = new FirstMessageUseCase(chatGPTService, chatRepository);
 
 const handleError = (res: Response, error: unknown) => {
     if (error instanceof Error) {
@@ -57,6 +73,8 @@ chatRouter.post('/', async (req: Request, res: Response) => {
         };
 
         const chat = await createChatUseCase.execute(chatDTO as any);
+        const response = await firstMessageUseCase.execute(new Uuid(chat.id))
+        console.log("AQUI MESMO ", response)
         res.status(201).json({ message: chat });
     } catch (error) {
         handleError(res, error);

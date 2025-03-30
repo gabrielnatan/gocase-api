@@ -6,7 +6,7 @@ export type CampaignProps = {
     id?: Uuid;
     name: string;
     goal: string;
-    products: string;
+    products: string[];
     content_type: string;
     hashtags: string[];
     influencers: string[];
@@ -25,7 +25,7 @@ export class Campaign extends Entity {
     id: Uuid;
     name: string;
     goal: string;
-    products: string;
+    products: string[];
     content_type: string;
     hashtags: string[];
     influencers: string[];
@@ -81,7 +81,7 @@ export class Campaign extends Entity {
         this.updated_at = new Date();
     }
 
-    changeProducts(products: string) {
+    changeProducts(products: string[]) {
         this.products = products;
         this.updated_at = new Date();
     }

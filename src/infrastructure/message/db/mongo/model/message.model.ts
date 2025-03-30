@@ -6,7 +6,7 @@ export interface IMessage extends Document {
     chat_id: string;
     sender: "user" | "assistant";
     content: string;
-    type?: 'message' | 'briefing' | 'upload'; 
+    type?: 'message' | 'briefing' | 'upload' | 'product' | 'postagem' | 'influencers'; 
     props?: object;
     created_at: Date;
     updated_at?: Date;
@@ -39,7 +39,7 @@ const MessageSchema: Schema = new Schema<IMessage>({
     },
     sender: { type: String, required: true, enum: ['assistant', 'user'] },
     content: { type: String, required: true },
-    type: { type: String, required: false, enum: ['message' , 'briefing' , 'upload'] },
+    type: { type: String, required: false, enum: ['message' , 'briefing' , 'upload', 'product', 'postagem', 'influencers'] },
     props: { type: Object, required: false },
     created_at: { type: Date, required: true, default: Date.now },
     updated_at: { type: Date },
